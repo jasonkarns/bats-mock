@@ -8,7 +8,7 @@ stub() {
   export "${prefix}_STUB_END"=
 
   mkdir -p "${BATS_TMPDIR}/bin"
-  ln -sf "${BATS_TEST_DIRNAME}/stubs/stub" "${BATS_TMPDIR}/bin/${program}"
+  ln -sf "${BASH_SOURCE[0]%stub.bash}binstub" "${BATS_TMPDIR}/bin/${program}"
 
   touch "${BATS_TMPDIR}/${program}-stub-plan"
   for arg in "$@"; do printf "%s\n" "$arg" >> "${BATS_TMPDIR}/${program}-stub-plan"; done
