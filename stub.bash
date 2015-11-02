@@ -1,3 +1,5 @@
+PATH="$BATS_TMPDIR/bin:$PATH"
+
 stub() {
   local program="$1"
   local prefix="$(echo "$program" | tr a-z- A-Z_)"
