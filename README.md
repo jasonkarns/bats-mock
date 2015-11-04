@@ -18,23 +18,19 @@ then in `test/test_helper.bash`:
 load helpers/mocks/stub
 ```
 
-### sparse-checkout
-That is all that's necessary to get the stub helpers into your project. However, as a submodule, it pulls in this entire repo. If you'd like only the minimum necessary files, you'll need to configure the submodule for sparse-checkout.
+(Optionally configure sparse-checkout if you're concerned with all the non-essential files being in your repo)
 
-Enable sparse-checkout *from the submodule directory*:
-
-``` sh
-cd test/helpers/mocks
-git config core.sparsecheckout true
-```
-
-Then configure explictly list the files you wish to have checked out. From the root of your project:
+Also available as an [npm module](https://www.npmjs.com/package/bats-mock) if you're into that sort of thing.
 
 ``` sh
-echo stub.bash >> .git/modules/test/helpers/mocks/info/sparse-checkout
-echo binstub >> .git/modules/test/helpers/mocks/info/sparse-checkout
+npm install --save-dev bats-mock
 ```
 
+then in `test/test_helper.bash`:
+
+``` bash
+load ../node_modules/bats-mock/stub
+```
 
 ## Credits
 
