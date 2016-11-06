@@ -53,38 +53,43 @@ The expected args (and the colon) is optional.
 
 So, in order to stub `date`, we could use something like this in a test case (where `get_timestamp` is the function under test, relying on data from the `date` command):
 
-    stub date \
-        "${_DATE_ARGS} : echo 1460967598.184561556" \
-        "${_DATE_ARGS} : echo 1460967598.084561556" \
-        "${_DATE_ARGS} : echo 1460967598.004561556" \
-        "${_DATE_ARGS} : echo 1460967598.000561556" \
-        "${_DATE_ARGS} : echo 1460967598.000061556"
+    @test "get_timestamp" {
+      stub date \
+          "${_DATE_ARGS} : echo 1460967598.184561556" \
+          "${_DATE_ARGS} : echo 1460967598.084561556" \
+          "${_DATE_ARGS} : echo 1460967598.004561556" \
+          "${_DATE_ARGS} : echo 1460967598.000561556" \
+          "${_DATE_ARGS} : echo 1460967598.000061556"
 
-    run get_timestamp
-    assert_success
-    assert_output 1460967598184
+      run get_timestamp
+      assert_success
+      assert_output 1460967598184
 
-    run get_timestamp
-    assert_success
-    assert_output 1460967598084
+      run get_timestamp
+      assert_success
+      assert_output 1460967598084
 
-    run get_timestamp
-    assert_success
-    assert_output 1460967598004
+      run get_timestamp
+      assert_success
+      assert_output 1460967598004
 
-    run get_timestamp
-    assert_success
-    assert_output 1460967598000
+      run get_timestamp
+      assert_success
+      assert_output 1460967598000
 
-    run get_timestamp
-    assert_success
-    assert_output 1460967598000
+      run get_timestamp
+      assert_success
+      assert_output 1460967598000
 
-    unstub date
+      unstub date
+    }
+
 
 This verifies that `get_timestamp` indeed called `date` using the args defined in `${_DATE_ARGS}`, and made proper use of the output of it.
 
 The plan is verified, one by one, as the calls come in, but the final check that there are no remaining un-met plans at the end is left until the stub is removed with `unstub`.
+
+Here, we used the `assert_success` and `assert_output` functions from [bats-assert][], but any check you use in your `bats` tests are fine to use.
 
 
 ### Unstubbing
@@ -113,3 +118,4 @@ Extracted from the [ruby-build][] test suite. Many thanks to its author and cont
 [ruby-build]: https://github.com/sstephenson/ruby-build
 [sstephenson]: https://github.com/sstephenson
 [mislav]: https://github.com/mislav
+[bats-assert]: https://github.com/ztombol/bats-assert
