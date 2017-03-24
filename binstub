@@ -59,7 +59,7 @@ while IFS= read -r line; do
       argument="${arguments[$i]}"
 
       case "$argument" in
-        $pattern ) ;;
+        "$pattern" ) ;;
         * ) result=1 ;;
       esac
     done
