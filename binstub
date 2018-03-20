@@ -49,8 +49,8 @@ while IFS= read -r line; do
     # respecting quoting.
     set -f
     patterns=($patterns)
+    arguments=($@)
     set +f
-    arguments=("$@")
 
     # Match the expected argument patterns to actual
     # arguments.
