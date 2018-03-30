@@ -85,7 +85,7 @@ So, in order to stub `date`, we could use something like this in a test case (wh
     }
 
 
-This verifies that `get_timestamp` indeed called `date` using the args defined in `${_DATE_ARGS}`, and made proper use of the output of it.
+This verifies that `get_timestamp` indeed called `date` using the args defined in `${_DATE_ARGS}` (which can not be declared in the test-case with local), and made proper use of the output of it.
 
 The plan is verified, one by one, as the calls come in, but the final check that there are no remaining un-met plans at the end is left until the stub is removed with `unstub`.
 
