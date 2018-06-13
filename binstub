@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 set -e
 
+# If stdin comes from a pipe, save its content for later
+if ! [ -t 0 ]; then
+	input="$(cat)"
+fi
 status=0
 program="${0##*/}"
 PROGRAM="$(echo "$program" | tr a-z- A-Z_)"
@@ -19,7 +23,6 @@ fi
 [ -e "${!_STUB_PLAN}" ] || exit 1
 [ -n "${!_STUB_RUN}" ] || eval "${_STUB_RUN}"="${BATS_MOCK_TMPDIR}/${program}-stub-run"
 
-
 # Initialize or load the stub run information.
 eval "${_STUB_INDEX}"=1
 eval "${_STUB_RESULT}"=0
@@ -30,6 +33,8 @@ eval "${_STUB_RESULT}"=0
 index=0
 while IFS= read -r line; do
   index=$(($index + 1))
+
+
 
   if [ -z "${!_STUB_END}" ] && [ $index -eq "${!_STUB_INDEX}" ]; then
     # We found the plan line we're interested in.
@@ -51,6 +56,7 @@ while IFS= read -r line; do
     patterns=($patterns)
     set +f
     arguments=("$@")
+    
 
     # Match the expected argument patterns to actual
     # arguments.
@@ -68,7 +74,7 @@ while IFS= read -r line; do
     # in a subshell. Otherwise, log the failure.
     if [ $result -eq 0 ] ; then
       set +e
-      ( eval "$command" )
+      ( eval "$command"  <<< "$input" )
       status="$?"
       set -e
     else
@@ -79,6 +85,7 @@ done < "${!_STUB_PLAN}"
 
 
 if [ -n "${!_STUB_END}" ]; then
+
   # Clean up the run file.
   rm -f "${!_STUB_RUN}"
 
@@ -90,7 +97,6 @@ if [ -n "${!_STUB_END}" ]; then
 
   # Return the result.
   exit "${!_STUB_RESULT}"
-
 else
   # If the requested index is larger than the number
   # of lines in the plan file, we failed.
@@ -104,5 +110,4 @@ else
   } > "${!_STUB_RUN}"
 
   exit "$status"
-
 fi
