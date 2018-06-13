@@ -96,6 +96,22 @@ Here, we used the `assert_success` and `assert_output` functions from [bats-asse
 
 Once the test case is done, you should call `unstub <program>` in order to clean up the temporary files, and make a final check that all the plans have been met for the stub.
 
+### Verifying stub input
+
+If you want to verify that your stub was passed the correct data in STDIN, you can redirect its content to a temporary file and check it.
+
+```
+@test "send_message" {
+
+	stub curl \
+		"${_CURL_ARGS} : cat > ${_TMP_DIR}/actual-input ; cat ${_RESOURCES_DIR}/mock-output"
+	
+	run send_message
+	assert_success
+	diff "${_TMP_DIR}/actual-input" "${_RESOURCES_DIR}/expected-input"
+}
+```
+
 
 ## How it works
 
