@@ -1,6 +1,9 @@
 # bats-mock
 Mocking/stubbing library for BATS (Bash Automated Testing System)
 
+## bats-core
+
+There are great things happening in the `bats` ecosystem! Anyone actively using it should be installing from [bats-core]: https://github.com/bats-core.
 
 ## Installation
 
@@ -40,7 +43,6 @@ After loading `bats-mock/stub` you have two new functions defined:
 
 - `unstub`: for cleaning up, and also verifying that the plan was fullfilled.
 
-
 ### Stubbing
 
 The `stub` function takes a program name as its first argument, and any remaining arguments goes into the stub plan, one line per arg.
@@ -51,51 +53,44 @@ Each plan line represents an expected invocation, with a list of expected argume
 
 The expected args (and the colon) is optional.
 
-So, in order to stub `date`, we could use something like this in a test case (where `get_timestamp` is the function under test, relying on data from the `date` command):
+So, in order to stub `date`, we could use something like this in a test case (where `format_date` is the function under test, relying on data from the `date` command):
 
-    @test "get_timestamp" {
-      stub date \
-          "${_DATE_ARGS} : echo 1460967598.184561556" \
-          "${_DATE_ARGS} : echo 1460967598.084561556" \
-          "${_DATE_ARGS} : echo 1460967598.004561556" \
-          "${_DATE_ARGS} : echo 1460967598.000561556" \
-          "${_DATE_ARGS} : echo 1460967598.000061556"
+```bash
+load helper
 
-      run get_timestamp
-      assert_success
-      assert_output 1460967598184
+# this is the "code under test"
+# it would normally be in another file
+format_date() {
+  date -r 222
+}
 
-      run get_timestamp
-      assert_success
-      assert_output 1460967598084
+setup() {
+  _DATE_ARGS='-r 222'
+  stub date \
+      "${_DATE_ARGS} : echo 'I am stubbed!'" \
+      "${_DATE_ARGS} : echo 'Wed Dec 31 18:03:42 CST 1969'"
+}
 
-      run get_timestamp
-      assert_success
-      assert_output 1460967598004
+teardown() {
+  unstub date
+}
 
-      run get_timestamp
-      assert_success
-      assert_output 1460967598000
+@test "date format util formats date with expected arguments" {
+  result="$(format_date)"
+  [ "$result" == 'I am stubbed!' ]
 
-      run get_timestamp
-      assert_success
-      assert_output 1460967598000
+  result="$(format_date)"
+  [ "$result" == 'Wed Dec 31 18:03:42 CST 1969' ]
+}
+```
 
-      unstub date
-    }
-
-
-This verifies that `get_timestamp` indeed called `date` using the args defined in `${_DATE_ARGS}` (which can not be declared in the test-case with local), and made proper use of the output of it.
+This verifies that `format_date` indeed called `date` using the args defined in `${_DATE_ARGS}` (which can not be declared in the test-case with local), and made proper use of the output of it.
 
 The plan is verified, one by one, as the calls come in, but the final check that there are no remaining un-met plans at the end is left until the stub is removed with `unstub`.
-
-Here, we used the `assert_success` and `assert_output` functions from [bats-assert][], but any check you use in your `bats` tests are fine to use.
-
 
 ### Unstubbing
 
 Once the test case is done, you should call `unstub <program>` in order to clean up the temporary files, and make a final check that all the plans have been met for the stub.
-
 
 ## How it works
 
@@ -105,11 +100,9 @@ Under the covers, `bats-mock` uses three scripts to manage the stubbed programs/
 
 First, it is the command (or program) itself, which when the stub is created is placed in (or rather, the `binstub` script is sym-linked to) `${BATS_MOCK_BINDIR}/${program}` (which is added to your `PATH` when loading the stub library). Secondly, it creates a stub plan, based on the arguments passed when creating the stub, and finally, during execution, the command invocations are tracked in a stub run file which is checked once the command is `unstub`'ed. The `${program}-stub-[plan|run]` files are both in `${BATS_MOCK_TMPDIR}`.
 
-
 ### Caveat
 
 If you stub functions, make sure to unset them, or the stub script wan't be called, as the function will shadow the binstub script on the `PATH`.
-
 
 ## Credits
 
@@ -118,4 +111,3 @@ Extracted from the [ruby-build][] test suite. Many thanks to its author and cont
 [ruby-build]: https://github.com/sstephenson/ruby-build
 [sstephenson]: https://github.com/sstephenson
 [mislav]: https://github.com/mislav
-[bats-assert]: https://github.com/ztombol/bats-assert
