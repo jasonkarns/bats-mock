@@ -44,11 +44,9 @@ while IFS= read -r line; do
       command="${command#* : }"
     fi
 
-    # Naively split patterns by whitespace for now.
-    # In the future, use a sed script to split while
-    # respecting quoting.
+    # Split patterns respecting possible quoted arguments with spaces.
     set -f
-    patterns=($patterns)
+    declare -a 'patterns=('"$patterns"')'
     set +f
     arguments=("$@")
 
@@ -59,7 +57,7 @@ while IFS= read -r line; do
       argument="${arguments[$i]}"
 
       case "$argument" in
-        $pattern ) ;;
+        "$pattern" ) ;;
         * ) result=1 ;;
       esac
     done
