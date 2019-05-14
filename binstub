@@ -58,7 +58,12 @@ while IFS= read -r line; do
 
       case "$argument" in
         "$pattern" ) ;;
-        * ) result=1 ;;
+        * )
+          {
+            printf -- 'Expected --->%s<---\n' "$pattern"
+            printf -- 'Received --->%s<---\n' "$argument"
+          } >> "/tmp/${program}-stub-diff"
+          result=1 ;;
       esac
     done
 
