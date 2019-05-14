@@ -44,9 +44,11 @@ while IFS= read -r line; do
       command="${command#* : }"
     fi
 
-    # Split patterns respecting possible quoted arguments with spaces.
+    # Naively split patterns by whitespace for now.
+    # In the future, use a sed script to split while
+    # respecting quoting.
     set -f
-    declare -a 'patterns=('"$patterns"')'
+    patterns=($patterns)
     set +f
     arguments=("$@")
 
