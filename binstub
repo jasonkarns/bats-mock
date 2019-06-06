@@ -44,11 +44,12 @@ while IFS= read -r line; do
       command="${command#* : }"
     fi
 
-    # Naively split patterns by whitespace for now.
+    # Split patterns as good as possible. Will fail
+    # for weird stuff like "`embedded command`"
     # In the future, use a sed script to split while
     # respecting quoting.
     set -f
-    patterns=($patterns)
+    eval "patterns=($patterns)"
     set +f
     arguments=("$@")
 
