@@ -12,13 +12,13 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           tag: ${{ github.ref_name }}
 
-#   npm:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v3
-#       - uses: actions/setup-node@v3
-#         with:
-#           registry-url: 'https://registry.npmjs.org'
-#       - run: npm publish
-#         env:
-#           NODE_AUTH_TOKEN: ${{ secrets.NPMJS_TOKEN }}
+  npm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_TOKEN }}
