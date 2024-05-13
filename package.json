@@ -1,7 +1,7 @@
 {
   "name": "bats-mock",
   "description": "Mocking/stubbing library for BATS (Bash Automated Testing System)",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "author": "Sam Stephenson <sstephenson@gmail.com> (http://sstephenson.us/)",
   "bugs": {
     "url": "https://github.com/jasonkarns/bats-mock/issues"
