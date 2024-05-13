@@ -35,5 +35,8 @@
     "shell",
     "test",
     "unit"
-  ]
+  ],
+  "devDependencies": {
+    "fixpack": "^4.0.0"
+  }
 }
