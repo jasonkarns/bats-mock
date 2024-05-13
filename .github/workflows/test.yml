@@ -12,6 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: github/super-linter/slim@v4
+      - uses: github/super-linter/slim@v6
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
