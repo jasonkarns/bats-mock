@@ -1,9 +1,10 @@
 # bats-mock
+
 Mocking/stubbing library for BATS (Bash Automated Testing System)
 
 ## bats-core
 
-There are great things happening in the `bats` ecosystem! Anyone actively using it should be installing from [bats-core]: https://github.com/bats-core.
+There are great things happening in the `bats` ecosystem! Anyone actively using it should be installing from [bats-core][].
 
 ## Installation
 
@@ -111,3 +112,4 @@ Extracted from the [ruby-build][] test suite. Many thanks to its author and cont
 [ruby-build]: https://github.com/sstephenson/ruby-build
 [sstephenson]: https://github.com/sstephenson
 [mislav]: https://github.com/mislav
+[bats-core]: https://github.com/bats-core
