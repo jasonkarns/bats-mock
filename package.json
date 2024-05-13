@@ -1,7 +1,7 @@
 {
   "name": "bats-mock",
   "description": "Mocking/stubbing library for BATS (Bash Automated Testing System)",
-  "version": "1.1.1",
+  "version": "1.1.2-4",
   "author": "Sam Stephenson <sstephenson@gmail.com> (http://sstephenson.us/)",
   "bugs": {
     "url": "https://github.com/jasonkarns/bats-mock/issues"
@@ -31,9 +31,6 @@
   "main": "stub.bash",
   "peerDependencies": {
     "bats": "^0.4.2 || ^1"
-  },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org"
   },
   "repository": {
     "type": "git",
