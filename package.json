@@ -1,36 +1,47 @@
 {
   "name": "bats-mock",
-  "version": "1.1.0",
   "description": "Mocking/stubbing library for BATS (Bash Automated Testing System)",
+  "version": "1.1.0",
   "author": "Sam Stephenson <sstephenson@gmail.com> (http://sstephenson.us/)",
+  "bugs": {
+    "url": "https://github.com/jasonkarns/bats-mock/issues"
+  },
   "contributors": [
     "Mislav Marohnić <mislav.marohnic@gmail.com> (http://mislav.net)",
     "Jason Karns <jason@karns.name> (http://jason.karns.name/)"
   ],
-  "homepage": "https://github.com/jasonkarns/bats-mock#readme",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/jasonkarns/bats-mock.git"
+  "devDependencies": {
+    "fixpack": "^4.0.0"
   },
-  "bugs": {
-    "url": "https://github.com/jasonkarns/bats-mock/issues"
-  },
-  "main": "stub.bash",
   "files": [
     "binstub",
     "stub.bash"
   ],
-  "peerDependencies": {
-    "bats": "^0.4.2 || ^1"
-  },
-  "license": "MIT",
+  "homepage": "https://github.com/jasonkarns/bats-mock#readme",
   "keywords": [
     "bash",
     "bats",
     "mock",
-    "stub",
     "shell",
+    "stub",
     "test",
     "unit"
-  ]
+  ],
+  "license": "MIT",
+  "main": "stub.bash",
+  "peerDependencies": {
+    "bats": "^0.4.2 || ^1"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jasonkarns/bats-mock.git"
+  },
+  "scripts": {
+    "lint": "fixpack",
+    "posttest": "npm run lint",
+    "test": "echo todo"
+  }
 }
