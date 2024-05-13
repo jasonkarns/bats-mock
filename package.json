@@ -20,6 +20,9 @@
     "binstub",
     "stub.bash"
   ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
   "peerDependencies": {
     "bats": "^0.4.2 || ^1"
   },
