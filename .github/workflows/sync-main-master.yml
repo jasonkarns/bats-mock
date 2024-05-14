@@ -10,4 +10,5 @@ on:
 
 jobs:
   sync:
+    permissions: { contents: write }
     uses: nodenv/.github/.github/workflows/sync-main-master.yml@v2
