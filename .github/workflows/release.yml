@@ -10,7 +10,9 @@ jobs:
     permissions: { contents: write }
     steps:
       - uses: actions/checkout@v4
-      - run: gh release create ${tag/*-*/$tag --prerelease} --generate-notes
+      - run: |
+          # shellcheck disable=SC2086
+          gh release create ${tag/*-*/$tag --prerelease} --generate-notes
         env:
           GH_TOKEN: ${{ github.token }}
           tag: ${{ github.ref_name }}
