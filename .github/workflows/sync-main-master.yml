@@ -6,8 +6,12 @@ on:
 permissions: { contents: read }
 
 # One-time commands for users to switch-over:
-# ```sh
-# git branch -m master main; git fetch origin; git branch -u origin/main main; git remote set-head origin -a
+#
+# ```console
+# git branch -m master main
+# git fetch origin
+# git branch -u origin/main main
+# git remote set-head origin -a
 # ```
 
 jobs:

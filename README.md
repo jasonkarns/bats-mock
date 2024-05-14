@@ -9,7 +9,7 @@ Mocking/stubbing library for [BATS (Bash Automated Testing System)][bats-core]
 The recommended installation is via git submodule.
 Assuming your project's bats tests are in `test`:
 
-```cli
+```console
 git submodule add https://github.com/jasonkarns/bats-mock test/helpers/mocks
 git commit -am 'added bats-mock module'
 ```
@@ -29,7 +29,7 @@ load helpers/mocks/stub
 Also available as an [npm module](https://www.npmjs.com/package/bats-mock)
 if you're into that sort of thing.
 
-```cli
+```console
 npm install --save-dev bats-mock
 ```
 
