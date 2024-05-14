@@ -19,11 +19,12 @@ jobs:
 
   npm:
     runs-on: ubuntu-latest
+    permissions: { id-token: write }
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           registry-url: 'https://registry.npmjs.org'
-      - run: npm publish
+      - run: npm publish --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPMJS_TOKEN }}
