@@ -1,6 +1,8 @@
 name: Test
 on: [push, pull_request]
 
+permissions: { contents: read }
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -10,8 +12,13 @@ jobs:
 
   lint:
     runs-on: ubuntu-latest
+    if: github.ref_name != 'main'
+    permissions: { statuses: write }
     steps:
       - uses: actions/checkout@v4
+        with: { fetch-depth: 0 } # super-linter needs full git history
       - uses: github/super-linter/slim@v6
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BASH_EXEC_IGNORE_LIBRARIES: true
+          FILTER_REGEX_EXCLUDE: '.*stub.*'
