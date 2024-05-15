@@ -6,23 +6,24 @@ Mocking/stubbing library for [BATS (Bash Automated Testing System)][bats-core]
 
 ### git
 
-The recommended installation is via git submodule.
-Assuming your project's bats tests are in `test`:
+The recommended installation is with git-subtree.
+Assuming your project's bats tests are in `test/`:
 
 ```console
-git submodule add https://github.com/jasonkarns/bats-mock test/helpers/mocks
-git commit -am 'added bats-mock module'
+# v1 can be any valid ref (tag, branch, commit) of the bats-mock repo
+git subtree add --prefix test/helpers/bats-mock https://github.com/jasonkarns/bats-mock v1 --squash
+
+# pull a future bats-mock release (say, v2) with:
+# git subtree pull --prefix test/helpers/bats-mock https://github.com/jasonkarns/bats-mock v2 --squash
+
+# bats-mock keeps a "major version" tag pinned to the highest corresponding tag
 ```
 
 then in `test/test_helper.bash`:
 
 ```bats
-load helpers/mocks/stub
+load helpers/bats-mock/stub
 ```
-
-> [!note]
-> Consider using git's [sparse-checkout](https://git-scm.com/docs/git-sparse-checkout)
-> if you're concerned with the non-essential files cluttering your repository.
 
 ### npm
 
