@@ -20,8 +20,7 @@ jobs:
       - uses: github/super-linter/slim@v6
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CREATE_LOG_FILE: true
           BASH_EXEC_IGNORE_LIBRARIES: true
           FILTER_REGEX_EXCLUDE: '.*stub.*'
-          CREATE_LOG_FILE: true
-          # LOG_FILE: ${{ github.step_summary }}
-      - run: ls super-linter.log
+      - run: cat super-linter.log >> $GITHUB_STEP_SUMMARY
