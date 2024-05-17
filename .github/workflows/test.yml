@@ -23,4 +23,5 @@ jobs:
           CREATE_LOG_FILE: true
           BASH_EXEC_IGNORE_LIBRARIES: true
           FILTER_REGEX_EXCLUDE: '.*stub.*'
-      - run: cat super-linter.log >> $GITHUB_STEP_SUMMARY
+      - if: always()
+        run: cat super-linter.log >> $GITHUB_STEP_SUMMARY
