@@ -22,3 +22,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BASH_EXEC_IGNORE_LIBRARIES: true
           FILTER_REGEX_EXCLUDE: '.*stub.*'
+          CREATE_LOG_FILE: true
+          LOG_FILE: ${{ github.step_summary }}
