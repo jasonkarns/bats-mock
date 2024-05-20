@@ -17,4 +17,4 @@ permissions: { contents: read }
 jobs:
   sync:
     permissions: { contents: write }
-    uses: nodenv/.github/.github/workflows/sync-main-master.yml@v2
+    uses: nodenv/.github/.github/workflows/sync-main-master.yml@v3
