@@ -6,16 +6,8 @@ permissions: { contents: read }
 
 jobs:
   github:
-    runs-on: ubuntu-latest
     permissions: { contents: write }
-    steps:
-      - uses: actions/checkout@v4
-      - run: |
-          # shellcheck disable=SC2086
-          gh release create ${tag/*-*/$tag --prerelease} --generate-notes
-        env:
-          GH_TOKEN: ${{ github.token }}
-          tag: ${{ github.ref_name }}
+    uses: nodenv/.github/.github/workflows/release.yml@v3
 
   npm:
     runs-on: ubuntu-latest
