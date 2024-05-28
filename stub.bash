@@ -31,7 +31,9 @@ unstub() {
   export "${prefix}_STUB_END"=1
 
   local STATUS=0
-  "$path" || STATUS="$?"
+  if [ ${_STUB_OMIT_VALIDATION:-0} -le 0 ]; then
+    "$path" || STATUS="$?"
+  fi
 
   rm -f "$path"
   rm -f "${BATS_MOCK_TMPDIR}/${program}-stub-plan" "${BATS_MOCK_TMPDIR}/${program}-stub-run"
