@@ -8,4 +8,4 @@ permissions: { contents: read }
 jobs:
   tag:
     permissions: { contents: write }
-    uses: nodenv/.github/.github/workflows/tag-major.yml@v3
+    uses: nodenv/.github/.github/workflows/tag-major.yml@v4

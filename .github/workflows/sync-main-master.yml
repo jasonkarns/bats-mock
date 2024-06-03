@@ -17,4 +17,4 @@ permissions: { contents: read }
 jobs:
   sync:
     permissions: { contents: write }
-    uses: nodenv/.github/.github/workflows/sync-default-branch.yml@v3
+    uses: nodenv/.github/.github/workflows/sync-default-branch.yml@v4

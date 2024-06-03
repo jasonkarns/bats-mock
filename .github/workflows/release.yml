@@ -7,7 +7,7 @@ permissions: { contents: read }
 jobs:
   github:
     permissions: { contents: write }
-    uses: nodenv/.github/.github/workflows/release.yml@v3
+    uses: nodenv/.github/.github/workflows/release.yml@v4
 
   npm:
     runs-on: ubuntu-latest
