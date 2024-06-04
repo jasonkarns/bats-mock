@@ -2,10 +2,9 @@ name: Tag Major Version
 on:
   push: { tags: "v*.*.*" }
   workflow_dispatch:
-
-permissions: { contents: read }
+permissions: {}
 
 jobs:
   tag:
-    permissions: { contents: write }
-    uses: nodenv/.github/.github/workflows/tag-major.yml@v3
+    permissions: {contents: write}
+    uses: nodenv/.github/.github/workflows/tag-major.yml@v4

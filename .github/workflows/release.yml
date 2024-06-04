@@ -1,22 +1,10 @@
 name: Release
 on:
   push: { tags: 'v[0-9]+.[0-9]+.[0-9]+*' }
-
-permissions: { contents: read }
+permissions: {}
 
 jobs:
-  github:
-    permissions: { contents: write }
-    uses: nodenv/.github/.github/workflows/release.yml@v3
-
-  npm:
-    runs-on: ubuntu-latest
-    permissions: { id-token: write }
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          registry-url: 'https://registry.npmjs.org'
-      - run: npm publish --provenance
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_TOKEN }}
+  release:
+    permissions: {contents: write, id-token: write}
+    uses: nodenv/.github/.github/workflows/release.yml@v4
+    secrets: inherit
