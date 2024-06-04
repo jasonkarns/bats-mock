@@ -1,7 +1,7 @@
 name: Test
 on: [push, pull_request, workflow_dispatch]
 
-permissions: { contents: read }
+permissions: {contents: read}
 
 jobs:
   test:
