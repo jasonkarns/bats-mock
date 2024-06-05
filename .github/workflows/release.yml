@@ -10,3 +10,4 @@ jobs:
     uses: nodenv/.github/.github/workflows/release.yml@v4
     with:
       homebrew: false
+      npm_scope: ''
