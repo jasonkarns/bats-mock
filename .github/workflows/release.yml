@@ -5,9 +5,10 @@ permissions: {}
 
 jobs:
   release:
-    permissions: {contents: write, id-token: write}
-    secrets: inherit
     uses: nodenv/.github/.github/workflows/release.yml@v4
+    permissions: {contents: write, id-token: write}
+    secrets:
+      NPMJS_TOKEN: ${{ secrets.NPMJS_TOKEN }}
     with:
       homebrew: false
       npm_scope: ''
