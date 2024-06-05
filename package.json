@@ -39,6 +39,7 @@
   "scripts": {
     "lint": "fixpack",
     "posttest": "npm run lint",
+    "postversion": "git push --follow-tags",
     "test": "echo todo"
   }
 }
