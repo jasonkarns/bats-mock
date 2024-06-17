@@ -22,7 +22,7 @@ jobs:
     if: github.ref_name != github.event.repository.default_branch
     permissions: {statuses: write}
     steps:
-      - uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
         with: { fetch-depth: 0 } # super-linter needs full git history
       - uses: github/super-linter/slim@4e51915f4a812abf59fed160bb14595c0a38a9e7 # v6
         env:
