@@ -131,7 +131,7 @@ The `${program}-stub-[plan|run]` files are both in `${BATS_MOCK_TMPDIR}`.
 ### Caveat
 
 If you stub functions, make sure to unset them,
-or the stub script wan't be called,
+or the stub script won't be called,
 as the function will shadow the binstub script on the `PATH`.
 
 ## Credits
