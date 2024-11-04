@@ -32,6 +32,7 @@ stub_repeated() {
 
 unstub() {
   local program="$1"
+  local force="${2:-false}"
   local prefix
   prefix="$(echo "$program" | tr a-z- A-Z_)"
   local path="${BATS_MOCK_BINDIR}/${program}"
@@ -39,7 +40,9 @@ unstub() {
   export "${prefix}_STUB_END"=1
 
   local STATUS=0
-  "$path" || STATUS="$?"
+  if [ "$force" != 'true' ]; then
+    "$path" || STATUS="$?"
+  fi
 
   rm -f "$path"
   rm -f "${BATS_MOCK_TMPDIR}/${program}-stub-plan" "${BATS_MOCK_TMPDIR}/${program}-stub-run"
