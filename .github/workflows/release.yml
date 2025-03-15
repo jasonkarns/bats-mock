@@ -1,0 +1,14 @@
+name: Release
+on:
+  push: { tags: 'v[0-9]+.[0-9]+.[0-9]+*' }
+permissions: {}
+
+jobs:
+  release:
+    uses: nodenv/.github/.github/workflows/release.yml@4a6b0b802263fdeb2035c36ec813da4e468945b7 # v4.5.3
+    permissions: {contents: write, id-token: write}
+    secrets:
+      NPMJS_TOKEN: ${{ secrets.NPMJS_TOKEN }}
+    with:
+      homebrew: false
+      npm_scope: ''
