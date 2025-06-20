@@ -12,3 +12,4 @@ jobs:
     with:
       homebrew: false
       npm_scope: ''
+      vMajor: true
