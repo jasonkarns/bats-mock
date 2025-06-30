@@ -37,12 +37,12 @@ npm install --save-dev bats-mock
 then in `test/test_helper.bash`:
 
 ```bats
-load ../node_modules/bats-mock/stub
+load ../node_modules/bats-mock/src/stub
 ```
 
 ## Usage
 
-After loading `bats-mock/stub` you have two new functions defined:
+After loading `bats-mock/src/stub` you have two new functions defined:
 
 - `stub`: for creating new stubs,
   along with a plan with expected args and the results to return when called.
