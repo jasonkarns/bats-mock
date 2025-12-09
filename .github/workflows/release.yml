@@ -13,6 +13,6 @@ jobs:
       homebrew: false
       npm_scope: ''
   sync:
-    uses: nodenv/.github/.github/workflows/sync-major-version.yml@v6
+    uses: nodenv/.github/.github/workflows/sync-major-version.yml@v7
     permissions: { contents: write }
     secrets: inherit
