@@ -1,15 +1,15 @@
 name: Test
 on:
   pull_request:
-  push: {branches: main}
-  schedule: [{cron: '0 0 10 * *'}] # monthly https://crontab.guru/#0_0_10_*_*
+  push: { branches: main }
+  schedule: [{ cron: "0 0 10 * *" }] # monthly https://crontab.guru/#0_0_10_*_*
   workflow_dispatch:
-permissions: {contents: read}
+permissions: { contents: read }
 
 jobs:
   test:
     uses: nodenv/.github/.github/workflows/test.yml@v7
-    with: {superlinter: false} # TODO renable superlinter
+    with: { superlinter: false } # TODO renable superlinter
     permissions:
       contents: read
       packages: read
@@ -20,12 +20,12 @@ jobs:
   superlinter:
     runs-on: ubuntu-latest
     if: github.ref_name != github.event.repository.default_branch
-    permissions: {statuses: write}
+    permissions: { statuses: write }
     steps:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with: { fetch-depth: 0 } # super-linter needs full git history
-      - uses: github/super-linter/slim@4e51915f4a812abf59fed160bb14595c0a38a9e7 # v6
+      - uses: github/super-linter/slim@b807e99ddd37e444d189cfd2c2ca1274d8ae8ef1 # v7
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BASH_EXEC_IGNORE_LIBRARIES: true
-          FILTER_REGEX_EXCLUDE: '.*stub.*'
+          FILTER_REGEX_EXCLUDE: ".*stub.*"

@@ -4,7 +4,7 @@ Mocking/stubbing library for [BATS (Bash Automated Testing System)][bats-core]
 
 ## Installation
 
-### git
+### Git
 
 The recommended installation is with git-subtree.
 Assuming your project's bats tests are in `test/`:
