@@ -134,6 +134,47 @@ If you stub functions, make sure to unset them,
 or the stub script won't be called,
 as the function will shadow the binstub script on the `PATH`.
 
+### Advanced usage
+
+You can set a global wildcard argument to allow any call: `stub cmd '* : echo "my return"'`.
+
+You can use a function to evaluate the return statement (the function MUST be exported in the script):
+
+```bats
+load helper
+
+# this is the "code under test"
+# it would normally be in another file
+format_date() {
+  date -r 222
+}
+
+function my_test_fct()
+{
+    echo "This is my final stub return, receiving arguments: $*"
+}
+export -f my_test_fct
+
+setup() {
+  _DATE_ARGS='-r 222'
+  stub date \
+      "${_DATE_ARGS} : echo 'I am stubbed!'" \
+      "${_DATE_ARGS} : my_test_fct \$*"
+}
+
+teardown() {
+  unstub date
+}
+
+@test "date format util formats date with expected arguments" {
+  result="$(format_date)"
+  [ "$result" == 'I am stubbed!' ]
+
+  result="$(format_date)"
+  [ "$result" == "This is my final stub return, receiving arguments: -r 222" ]
+}
+```
+
 ## Credits
 
 Extracted from the [ruby-build][] test suite.
