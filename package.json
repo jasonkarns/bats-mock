@@ -14,8 +14,8 @@
     "fixpack": "^4.0.0"
   },
   "files": [
-    "binstub",
-    "stub.bash"
+    "src/binstub.bash",
+    "src/stub.bash"
   ],
   "homepage": "https://github.com/jasonkarns/bats-mock#readme",
   "keywords": [
@@ -28,7 +28,7 @@
     "unit"
   ],
   "license": "MIT",
-  "main": "stub.bash",
+  "main": "src/stub.bash",
   "peerDependencies": {
     "bats": "^0.4.2 || ^1"
   },
