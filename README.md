@@ -107,6 +107,9 @@ Finally, when the stub is removed with `unstub`,
 there is a final check to ensure there are no remaining un-met plans
 (which would indicated an expected invocation that did not occur).
 
+You can force to `unstub` without validation of expected plans with
+`unstub <cmd> true`.
+
 ### Unstubbing
 
 Once the test case is done,
