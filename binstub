@@ -12,6 +12,7 @@ _STUB_NOINDEX="${PROGRAM}_STUB_NOINDEX"
 _STUB_RESULT="${PROGRAM}_STUB_RESULT"
 _STUB_END="${PROGRAM}_STUB_END"
 _STUB_DEBUG="${PROGRAM}_STUB_DEBUG"
+_STUB_ERRORS="${PROGRAM}_STUB_ERRORS"
 
 if [ -n "${!_STUB_DEBUG}" ]; then
   echo "$program" "$@" >&${!_STUB_DEBUG}
@@ -25,6 +26,20 @@ fi
 eval "${_STUB_INDEX}"=1
 eval "${_STUB_RESULT}"=0
 [ ! -e "${!_STUB_RUN}" ] || source "${!_STUB_RUN}"
+
+
+function _stub_split_pattern_line {
+  # Split the line into an array of arguments to
+  # match and a command to run to produce output.
+  command=" $1"
+  if [ "$command" != "${command/ : }" ]; then
+    patterns="${command%% : *}"
+    command="${command#* : }"
+  else
+    patterns=""
+    command="$1"
+  fi
+}
 
 # Expose this for stub scripts.
 inspect_args() {
@@ -45,21 +60,16 @@ inspect_args() {
 # Loop over each line in the plan.
 IFS=$'\n' read -d '' -r -a lines < "${!_STUB_PLAN}" || true
 index=0
+match_found=0
 for line in "${lines[@]}"; do
   index=$(($index + 1))
 
   if [[ -z "${!_STUB_END}" && -n "${!_STUB_NOINDEX}" || $index -eq "${!_STUB_INDEX}" ]]; then
     # We found the plan line we're interested in.
     # Start off by assuming success.
-    result=0
+    match_found=1
 
-    # Split the line into an array of arguments to
-    # match and a command to run to produce output.
-    command=" $line"
-    if [ "$command" != "${command/ : }" ]; then
-      patterns="${command%% : *}"
-      command="${command#* : }"
-    fi
+    _stub_split_pattern_line "$line"
 
     # Naively split patterns by whitespace for now.
     # In the future, use a sed script to split while
@@ -77,13 +87,13 @@ for line in "${lines[@]}"; do
 
       case "$argument" in
         $pattern ) ;;
-        * ) result=1 ;;
+        * ) match_found=0 ;;
       esac
     done
 
     # If the arguments matched, evaluate the command
     # in a subshell. Otherwise, log the failure.
-    if [ $result -eq 0 ] ; then
+    if [ $match_found -eq 1 ] ; then
       set +e
       ( eval "$command" )
       status="$?"
@@ -104,6 +114,20 @@ if [ -n "${!_STUB_END}" ]; then
   # the requested index, we failed.
   if [ $index -ge "${!_STUB_INDEX}" ]; then
     eval "${_STUB_RESULT}"=1
+    while IFS= read -r line; do
+      index=$((index + 1))
+
+      if [ $index -ge "${!_STUB_INDEX}" ]; then
+        _stub_split_pattern_line "$line"
+        echo "Missing call: \`$program $patterns\`"
+      fi
+    done < "${!_STUB_PLAN}"
+  fi
+  if [ -f "${!_STUB_ERRORS}" ]; then
+    while IFS= read -r line; do
+      echo "Unexpected call: \`$program $line\`"
+    done < "${!_STUB_ERRORS}"
+    rm "${!_STUB_ERRORS}"
   fi
 
   # Return the result.
@@ -112,8 +136,9 @@ if [ -n "${!_STUB_END}" ]; then
 else
   # If the requested index is larger than the number
   # of lines in the plan file, we failed.
-  if [[ -z "${!_STUB_NOINDEX}" && "${!_STUB_INDEX}" -gt $index ]]; then
+  if [[ -z "${!_STUB_NOINDEX}" && $match_found -eq 0 ]]; then
     eval "${_STUB_RESULT}"=1
+    printf '%s\n' "$*" >> "${!_STUB_ERRORS}"
   fi
 
   # Write out the run information.
